@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://cap78xy6odlbd"]
+
+[ext_resource type="Shader" path="res://main.gdshader" id="1_vldlx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03eua"]
+render_priority = 0
+shader = ExtResource("1_vldlx")
+shader_parameter/amplitude = 0.5
+shader_parameter/frequency = 0.9
+shader_parameter/time_scale = 0.2
+shader_parameter/color1 = Color(0, 0.518892, 0.327908, 1)
+shader_parameter/color2 = Color(0, 0.430956, 0.830598, 1)
+shader_parameter/color_speed = 0.21
+shader_parameter/glow_strength = 0.255
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u6mqp"]
+material = SubResource("ShaderMaterial_03eua")
+size = Vector2(15, 2)
+subdivide_width = 128
+subdivide_depth = 128
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xillu"]
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 0.1, 2)
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pjsp6"]
+metallic = 1.0
+metallic_specular = 0.26
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dpskh"]
+material = SubResource("StandardMaterial3D_pjsp6")
+radius = 0.01
+height = 0.02
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.214906, 0.762661, 0.610052, 0.0381297, 0.617619, -0.785553, -0.97589, 0.192081, 0.10365, 3.03719, -3.05815, 0.881801)
+fov = 54.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.125899, -0.497467, 0.858298, 0.12941, 0.866025, 0.482963, -0.983566, 0.0502677, 0.173408, 0.222233, 0, -0.0244159)
+mesh = SubResource("PlaneMesh_u6mqp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.125899, -0.497467, 0.858298, 0.12941, 0.866025, 0.482963, -0.983566, 0.0502677, 0.173408, 0.35306, 0, -0.0376356)
+mesh = SubResource("PlaneMesh_u6mqp")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+explosiveness = 0.04
+randomness = 0.07
+collision_base_size = 1.29
+process_material = SubResource("ParticleProcessMaterial_xillu")
+draw_pass_1 = SubResource("SphereMesh_dpskh")
